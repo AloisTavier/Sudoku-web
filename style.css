@@ -42,15 +42,16 @@ button:active {
 /* adaptative screen size for cell phones */
 @media (max-width: 600px) {
     #sudoku-grid {
-        grid-template-columns: repeat(9, 25px);
-        grid-template-rows: repeat(9, 25px);
+        grid-template-columns: repeat(9, 24px);
+        grid-template-rows: repeat(9, 24px);
         margin: 15px auto;
         gap: 1px;
     }
     #sudoku-grid input {
-        width: 22px;
-        height: 22px;
-        font-size: 0.8em;
+        width: 20px;
+        height: 20px;
+        font-size: 0.7em;
+        border-radius: 0px;
     }
     button{
         width: 120px;
