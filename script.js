@@ -3,10 +3,15 @@ let sol = Array.from({ length: 9 }, () => Array(9).fill(0));
 let gridunsolved = Array.from({ length: 9 }, () => Array(9).fill(0));
 let control = 0;
 function generateGrid(level) {
-    let grid = gridSudoku()[0];
+    sol = gridSudoku()[0];
+    let grid = Array.from({ length: 9 }, () => Array(9).fill(0));
+    for (let i = 0; i < 9; i++) {
+        grid[i] = [...sol[i]];
+    }
+    console.log("grid", grid);
     let ugrid = unsolvedGrid(grid, level);
-    displayGrid(ugrid);
-    sol = [...grid];
+    displayGrid(grid);
+    console.log("sol", sol);
     gridunsolved = ugrid;
     console.log(sol);
 }
@@ -31,6 +36,9 @@ function displayGrid(grid) {
             cell.type = 'text';
             cell.maxLength = 1;
             cell.value = grid[i][j] !== 0 ? grid[i][j] : '';
+            if (grid[i][j] !== 0) {
+                cell.readOnly = 'true';
+            }
             cell.dataset.row = i;
             cell.dataset.col = j;
 

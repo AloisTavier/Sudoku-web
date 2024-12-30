@@ -48,9 +48,9 @@ button:active {
         gap: 1px;
     }
     #sudoku-grid input {
-        width: 25px;
-        height: 25px;
-        font-size: 1em;
+        width: 22px;
+        height: 22px;
+        font-size: 0.8em;
     }
     button{
         width: 120px;
