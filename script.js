@@ -46,6 +46,11 @@ function displayGrid(grid) {
             if (i%3 === 0){cell.style.borderTop = '3.5px solid black';}
             if (grid[i][j] !== 0) {
                 cell.style.backgroundColor = '#d0d0d0';
+            } 
+            console.log("sol[i][j]", sol[i][j]);
+            console.log("grid[i][j]", grid[i][j]);
+            if (sol[i][j] !== grid[i][j]){
+                cell.style.backgroundColor = '#ffffff';
             }
             if (i===8){cell.style.borderBottom = '3.5px solid black';}
             if (j===8){cell.style.borderRight = '3.5px solid black';}
@@ -71,17 +76,18 @@ function displayGrid(grid) {
                     if (cell.style.backgroundColor == 'rgb(147, 147, 147)') {
                         for (let i = 0; i < 9; i++) {
                             for (let j = 0; j < 9; j++) {
-                                if (grid[i][j] !== 0) {
+                                if (grid[i][j] !== 0 && grid[i][j] === sol[i][j]) {
                                     document.querySelector(`input[data-row="${i}"][data-col="${j}"]`).style.backgroundColor = '#d0d0d0';
                                 }
                                 else {
                                     if (document.querySelector(`input[data-row="${i}"][data-col="${j}"]`).style.backgroundColor == 'rgb(147, 147, 147)') {
                                     document.querySelector(`input[data-row="${i}"][data-col="${j}"]`).style.backgroundColor = '#ffffff';
+                                    document.querySelector(`input[data-row="${i}"][data-col="${j}"]`).readOnly = false;
                                     }
                                 }
                             }
                         }
-                        if (grid[cell.dataset.row][cell.dataset.col] !== 0) {
+                        if (grid[cell.dataset.row][cell.dataset.col] !== 0 && grid[cell.dataset.row][cell.dataset.col] === sol[cell.dataset.row][cell.dataset.col]) {
                             cell.style.backgroundColor = '#d0d0d0';
                         } else {
                             cell.style.backgroundColor = '#ffffff';
