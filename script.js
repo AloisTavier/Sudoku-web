@@ -86,7 +86,7 @@ function displayGrid(grid) {
                             for (let j = 0; j < 9; j++) {
                                 //set all the ciells with the same value to grey
                                 // document.querySelector(`input[data-row="${i}"][data-col="${j}"]`).style.backgroundColor = '#ffffff';
-                                if (gridunsolved[i][j] == parseInt(value)) {
+                                if (unsolved[i][j] == parseInt(value)) {
                                     document.querySelector(`input[data-row="${i}"][data-col="${j}"]`).style.backgroundColor = 'rgb(147, 147, 147)';
                                 } else {
                                     document.querySelector(`input[data-row="${i}"][data-col="${j}"]`).style.backgroundColor = '#ffffff';
@@ -123,7 +123,7 @@ function checkGrid(cell) {
         const col = input.dataset.col;
         grid[row][col] = input.value ? parseInt(input.value) : 0;
     });
-    gridunsolved = grid;
+    unsolved = grid;
 
     let valid = checkGrid(grid)[1] && !check0InGrid(grid)[0];
     if (valid) {
@@ -329,7 +329,7 @@ function checkGrid(cell) {
         const col = input.dataset.col;
         grid[row][col] = input.value ? parseInt(input.value) : 0;
     });
-    gridunsolved = grid;
+    unsolved = grid;
     //validate
     // console.log(data.valid);
     valid = checkGrid1(grid)[1] && !check0InGrid(grid)[0];
