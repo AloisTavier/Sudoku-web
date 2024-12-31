@@ -2,5 +2,5 @@
 <ul>
   <li>Web page available at https://aloistavier.github.io/Sudoku-web/</li>
   <li>3 Levels of difficulty</li>
-  <li>3 Solution available</li>
+  <li>Solution available</li>
 </ul>
