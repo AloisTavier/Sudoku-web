@@ -140,33 +140,77 @@ function gridSudoku() {
     for (let i = 0; i < 3; i++) {
         let shuffled = shuffle(vector);  // Shuffle a copy of the vector
         grid[i*3] = [...shuffled];  // Shuffle the row
+        while (checkGrid1(grid)[1] === false) {
+            shuffled = shuffle(vector);
+            grid[i*3] = [...shuffled];
+        }
     }
     
     let iter = 0;
     while (check0InGrid(grid)[0]) {
         iter++;
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 12; i++) {
             let c = randomChoice(Array.from({ length: 9 }, (_, i) => i ));
             let r = randomChoice(Array.from({ length: 9 }, (_, i) => i ));
             grid[r][c] = 0;
         }
+        
         for (let i = 1; i < 9; i++) {
             let carray = Array(9).fill(0);
             carray = [...grid[i]];
             for (let j = 0; j < 9; j++) {
                 if (grid[i][j] === 0) {
-                    carray[j] = randomChoice(choicesInSubgridAndLines(grid, i, j));
+                    let choices = choicesInSubgridAndLines(grid, i, j);
+                    let choice = randomChoice(choices);
+                    let gchoice = true;
+                    while (gchoice) {
+                        if (choice === 0 || carray.includes(choice) === false) {
+                            carray[j] = choice;
+                            gchoice = false;
+                        }
+                        else {
+                            let possible = false;
+                            let i = 0;
+                            for (i = 0; i < choices.length; i++) {
+                                if (carray.includes(choices[i]) === false) {
+                                    possible = true;
+                                }
+                            }
+                            if (!possible) {
+                                choice = 0;
+                            } else {choice = randomChoice(choices);}
+                        }
+                    }
                         // console.log(i, j, "choices", randomChoice(choicesInSubgridAndLines(grid, i, j)));
                         // console.log("grid[i][j]", carray[j]);
                 }
             }
             grid[i] = [...carray];
+
+        }
+        if (iter === 1000 && check0InGrid(grid)[1] > 0) {
+            // sets everything to 0
+            for (let i = 0; i < 9; i++) {
+                grid[i] = Array(9).fill(0);
+            }
+            vector = Array.from({ length: 9 }, (_, i) => i + 1);
+
+            for (let i = 0; i < 3; i++) {
+                let shuffled = shuffle(vector);  // Shuffle a copy of the vector
+                grid[i*3] = [...shuffled];  // Shuffle the row
+                while (checkGrid1(grid)[1] === false) {
+                    shuffled = shuffle(vector);
+                    grid[i*3] = [...shuffled];
+                }
+            }
         }
         if (iter === 10000) {
-            console.log("number of 0s:", check0InGrid(grid)[1]);
+            console.log("Too many iterations:", iter);
+            console.log("nomber of 0s:", check0InGrid(grid)[1]);
             break;
         }
     }
+    console.log("Check Grid:", checkGrid1(grid));
     console.log("Iterations:", iter);
     // console.log("Grid:", grid);
     return [grid, iter];
