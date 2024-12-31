@@ -74,6 +74,11 @@ function displayGrid(grid) {
                                 if (grid[i][j] !== 0) {
                                     document.querySelector(`input[data-row="${i}"][data-col="${j}"]`).style.backgroundColor = '#d0d0d0';
                                 }
+                                else {
+                                    if (document.querySelector(`input[data-row="${i}"][data-col="${j}"]`).style.backgroundColor == 'rgb(147, 147, 147)') {
+                                    document.querySelector(`input[data-row="${i}"][data-col="${j}"]`).style.backgroundColor = '#ffffff';
+                                    }
+                                }
                             }
                         }
                         if (grid[cell.dataset.row][cell.dataset.col] !== 0) {
