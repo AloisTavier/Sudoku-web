@@ -1,6 +1,6 @@
 // static/script.js
 let sol = Array.from({ length: 9 }, () => Array(9).fill(0));
-let gridunsolved = Array.from({ length: 9 }, () => Array(9).fill(0));
+let unsolved = Array.from({ length: 9 }, () => Array(9).fill(0));
 let control = 0;
 function generateGrid(level) {
     sol = gridSudoku()[0];
@@ -10,9 +10,9 @@ function generateGrid(level) {
     }
     console.log("grid", grid);
     let ugrid = unsolvedGrid(grid, level);
-    displayGrid(grid);
+    displayGrid(ugrid);
+    unsolved = ugrid;
     console.log("sol", sol);
-    gridunsolved = ugrid;
     console.log(sol);
 }
 function solvedGrid() {
@@ -21,7 +21,7 @@ function solvedGrid() {
         control = 1;
     }
     else{
-        displayGrid(gridunsolved);
+        displayGrid(unsolved);
         control = 0;
     }
 }
@@ -76,13 +76,17 @@ function displayGrid(grid) {
                                 }
                             }
                         }
+                        if (grid[cell.dataset.row][cell.dataset.col] !== 0) {
+                            cell.style.backgroundColor = '#d0d0d0';
+                        } else {
+                            cell.style.backgroundColor = '#ffffff';
+                        }
                     } else {
                         for (let i = 0; i < 9; i++) {
                             for (let j = 0; j < 9; j++) {
                                 //set all the ciells with the same value to grey
                                 // document.querySelector(`input[data-row="${i}"][data-col="${j}"]`).style.backgroundColor = '#ffffff';
                                 if (gridunsolved[i][j] == parseInt(value)) {
-                                    document.querySelector(`input[data-row="${i}"][data-col="${j}"]`).readOnly = 'true';
                                     document.querySelector(`input[data-row="${i}"][data-col="${j}"]`).style.backgroundColor = 'rgb(147, 147, 147)';
                                 } else {
                                     document.querySelector(`input[data-row="${i}"][data-col="${j}"]`).style.backgroundColor = '#ffffff';
@@ -284,14 +288,14 @@ function checkCell(grid, row, col, number) {
     for (let c = 0; c < 9; c++) {
         if ((grid[row][c] === number && c !== col) && grid[row][c] !== 0) {
             console.log("Problem in row:", grid[row]);
-            return ["row", false];
+            return ["ligne", false];
         }
     }
 
     for (let r = 0; r < 9; r++) {
         if ((grid[r][col] === number && r !== row) && grid[r][col] !== 0) {
             console.log("Problem in column:", grid.map(r => r[col]));
-            return ["column", false];
+            return ["colonne", false];
         }
     }
 
@@ -300,7 +304,7 @@ function checkCell(grid, row, col, number) {
         for (let j = 0; j < 3; j++) {
             if ((subgrid[i][j] === number && (i !== row % 3 || j !== col % 3)) && subgrid[i][j] !== 0) {
                 console.log("Problem in subgrid:", subgrid);
-                return ["subgrid", false];
+                return ["sous-grille", false];
             }
         }
     }
@@ -331,7 +335,7 @@ function checkGrid(cell) {
     valid = checkGrid1(grid)[1] && !check0InGrid(grid)[0];
     console.log("data valid is " + valid);
     if (valid) {
-        alert("Congratulations! Sudoku Solved!");
+        alert("Félicitation le Sudoku est résolu !");
     }
 
 
@@ -339,7 +343,7 @@ function checkGrid(cell) {
     let validation = checkGrid1(grid);
     console.log(validation);
     if (!validation[1]) {
-        let text = cell.value + " is not a valid move! " + "Check the " + validation[0] + " ;)";
+        let text = "Le " + cell.value + " n'est pas possible. " + "Regarde bien la " + validation[0] + " ;)";
         alert(text);
         cell.value = '';
     }
