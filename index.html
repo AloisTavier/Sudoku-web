@@ -16,8 +16,13 @@
         <button style="border-radius:5px;border:solid black 2px;margin:10px 10px 10px 20px;font-weight:bold;background-color:lightblue;padding:10px 20px;width:100px" onclick="generateGrid(1)">Facile</button>
         <button style="border-radius:5px;border:solid black 2px;margin:10px;font-weight:bold;background-color:lightblue;padding:10px 20px;width:100px" onclick="generateGrid(2)">Moyen</button>
         <button style="border-radius:5px;border:solid black 2px;margin:10px;font-weight:bold;background-color:lightblue;padding:10px 20px;width:100px" onclick="generateGrid(3)">Dur</button>
+        
     </div>
-    <div id="box" style="display:flex;flex-direction:column;">
+
+    <div id="box" style="display:none;flex-direction:column;">
+        <div id="progressBar">
+            <div id="progress"></div>
+        </div>
         <div id="sudoku-grid"></div>
         <button id="sol" style="padding:15px 25px;border-radius:30px;border:solid 2px black;margin:10px;font-weight:bold;background-color:green;color:white;" onclick="solvedGrid()">SOLUTION</button>
     </div>

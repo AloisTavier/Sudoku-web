@@ -2,7 +2,10 @@
 let sol = Array.from({ length: 9 }, () => Array(9).fill(0));
 let unsolved = Array.from({ length: 9 }, () => Array(9).fill(0));
 let control = 0;
+let numberOfNumbers = 81;
 function generateGrid(level) {
+    document.getElementById('box').style.display = 'flex';
+    updateStats(unsolved);
     sol = gridSudoku()[0];
     let grid = Array.from({ length: 9 }, () => Array(9).fill(0));
     for (let i = 0; i < 9; i++) {
@@ -47,8 +50,6 @@ function displayGrid(grid) {
             if (grid[i][j] !== 0) {
                 cell.style.backgroundColor = '#d0d0d0';
             } 
-            console.log("sol[i][j]", sol[i][j]);
-            console.log("grid[i][j]", grid[i][j]);
             if (sol[i][j] !== grid[i][j]){
                 cell.style.backgroundColor = '#ffffff';
             }
@@ -111,6 +112,7 @@ function displayGrid(grid) {
                     }
                 }
             }
+            updateStats(grid);
             cell.oninput = function () {
                 // checks if the input is a number
                 if (!/^[1-9]$/.test(cell.value)) {
@@ -118,6 +120,7 @@ function displayGrid(grid) {
                     return;
                 }
                 checkGrid(cell);
+                updateStats(grid);
             };
 
             container.appendChild(cell);
@@ -196,8 +199,6 @@ function gridSudoku() {
                             } else {choice = randomChoice(choices);}
                         }
                     }
-                        // console.log(i, j, "choices", randomChoice(choicesInSubgridAndLines(grid, i, j)));
-                        // console.log("grid[i][j]", carray[j]);
                 }
             }
             grid[i] = [...carray];
@@ -238,7 +239,6 @@ function check0InGrid(grid) {
             if (grid[i][j] === 0) number0++;
         }
     }
-    // console.log("Number of 0s:", number0);
     return number0 !== 0 ? [true, number0] : [false, 0];
 }
 
@@ -291,6 +291,7 @@ function unsolvedGrid(grid, level) {
         }
     }
     console.log("Count numbers:", 81 - check0InGrid(grid)[1]);
+    numberOfNumbers = check0InGrid(grid)[1];
     return grid;
 }
 
@@ -341,8 +342,6 @@ function checkGrid(cell) {
         grid[row][col] = input.value ? parseInt(input.value) : 0;
     });
     unsolved = grid;
-    //validate
-    // console.log(data.valid);
     valid = checkGrid1(grid)[1] && !check0InGrid(grid)[0];
     console.log("data valid is " + valid);
     if (valid) {
@@ -391,6 +390,12 @@ function randomChoice(array) {
 
     }
     return array[index];
+}
+const updateStats = (grid) => {
+    let count_grid = check0InGrid(unsolved)[1];
+    const progress =  (((numberOfNumbers-count_grid) / numberOfNumbers) * 100);
+    const progressBar = document.getElementById('progress');
+    progressBar.style.width = `${progress}%`;
 }
 
 // printGrid(unsolvedGrid(gridSudoku()[0], 3));

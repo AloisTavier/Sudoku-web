@@ -3,6 +3,23 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
 }
+#progressBar{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    width: 360px;
+    height: 10px;
+    border-radius: 5px;
+    border: 1.5px solid rgb(11, 34, 97);
+    z-index: 1;
+}
+#progress{
+    width: 50%;
+    height: 100%;
+    background-color: rgb(19, 65, 192);
+    border-radius: 5px;
+    transition: all 0.5s ease;
+}
 
 #sudoku-grid {
     display: grid;
@@ -75,7 +92,11 @@ button:active {
         align-items: center;
 
     }
+    #progressBar{
+        width: 288px;
+    }
 }
+
 :root {
     touch-action: pan-x pan-y;
     height: 100% 
